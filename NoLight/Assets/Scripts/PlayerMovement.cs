@@ -18,9 +18,9 @@ public class PlayerMovement : MonoBehaviour
     private float offEdegeCounter;
 
     float jumpBufferTime = 0.1f,jumpBufferCounter;
-
-
     float movement;
+
+    private GameObject p1, p2;
     #endregion
 
     // Start is called before the first frame update
@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         characterCollider = GetComponent<Collider2D>();
+        p1 = GameObject.FindGameObjectWithTag("Player1");
+        p2 = GameObject.FindGameObjectWithTag("Player2");
     }
 
     // Update is called once per frame
@@ -70,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * speed;
+            p1.transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * speed;
+            p2.transform.position -= new Vector3(movement, 0, 0) * Time.deltaTime * speed;
     }
 }
