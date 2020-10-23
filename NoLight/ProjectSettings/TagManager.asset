@@ -8,6 +8,7 @@ TagManager:
   - Light
   - Player2
   - Player1
+  - Gate
   layers:
   - Default
   - TransparentFX

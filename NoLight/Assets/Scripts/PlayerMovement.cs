@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
-    private float speed = 5f;
+    private float speed = 2.5f;
     private float jumpForce = 5;
     Rigidbody2D body;
 
@@ -20,7 +20,11 @@ public class PlayerMovement : MonoBehaviour
     float jumpBufferTime = 0.1f,jumpBufferCounter;
     float movement;
 
+    const string isJumping = "isJumping";
+
     private GameObject p1, p2;
+
+    Animator animator;
     #endregion
 
     // Start is called before the first frame update
@@ -30,11 +34,14 @@ public class PlayerMovement : MonoBehaviour
         characterCollider = GetComponent<Collider2D>();
         p1 = GameObject.FindGameObjectWithTag("Player1");
         p2 = GameObject.FindGameObjectWithTag("Player2");
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //finding the ground
         isGrounded = Physics2D.IsTouchingLayers(characterCollider, groundLayer);
 
         //off edge jump 
@@ -63,16 +70,18 @@ public class PlayerMovement : MonoBehaviour
         {
             body.velocity = new Vector2(body.velocity.x, jumpForce);
             jumpBufferCounter = 0;
+            animator.SetTrigger("isJumping");
         }
         if(Input.GetButtonUp("Jump")&& body.velocity.y > 0)
         {   //if the player hold down the space bar then they can jump a little bit higher.
             body.velocity = new Vector2(body.velocity.x, body.velocity.y * .5f);
+            animator.SetTrigger("isJumping");
         }
     }
 
     private void FixedUpdate()
     {
-            p1.transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * speed;
-            p2.transform.position -= new Vector3(movement, 0, 0) * Time.deltaTime * speed;
+        p1.transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * speed;
+        p2.transform.position -= new Vector3(movement, 0, 0) * Time.deltaTime * speed;
     }
 }
