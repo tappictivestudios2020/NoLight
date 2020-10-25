@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance { get; private set; }
     #region Variables
     private float speed = 2.5f;
-    private float jumpForce = 5;
+    private float jumpForce = 6;
     Rigidbody2D body;
+    private Vector3 startingPosition;
 
-    public bool isGrounded;
+    bool isGrounded;
     public LayerMask groundLayer;
 
     private Collider2D characterCollider;
@@ -26,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     Animator animator;
     #endregion
-
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         characterCollider = GetComponent<Collider2D>();
         p1 = GameObject.FindGameObjectWithTag("Player1");
         p2 = GameObject.FindGameObjectWithTag("Player2");
-
+        startingPosition = body.position;   //reloading the player's initial position after game restart
         animator = GetComponent<Animator>();
     }
 
