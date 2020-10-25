@@ -12,14 +12,24 @@ public class TheBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShootShurikens();
+        if (Input.GetMouseButton(0))
+        {
+            ShootShurikens();
+            Debug.Log("Shoot");
+        }
     }
 
     public void ShootShurikens()
     {
-        GameObject shurikenLeft = Instantiate(Shuriken) as GameObject;
-        GameObject shurikenRight = Instantiate(Shuriken) as GameObject;
-        shurikenLeft.transform.position = leftShoot.transform.position;
-        shurikenRight.transform.position = rightShoot.transform.position;
+        //GameObject shurikenRight = Instantiate(Shuriken) as GameObject;
+
+        GameObject obj = ObjectPooler.Instance.GetFromPool(); //getting object from the object poolder getpooledobject method.
+        if (obj == null)
+            return;
+
+        obj.transform.position = leftShoot.transform.position;
+
+        obj.SetActive(true);
+        //shurikenRight.transform.position = rightShoot.transform.position;
     }
 }
